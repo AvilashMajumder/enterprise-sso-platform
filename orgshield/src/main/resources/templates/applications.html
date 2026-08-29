@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>OrgShield - Applications</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 20px 8%;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            color: #475569;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h2>OrgShield</h2>
+    <p>Enterprise SSO Management Platform</p>
+
+</header>
+
+<div class="container">
+
+    <div class="header-row">
+
+        <div>
+
+            <h1>Applications</h1>
+
+            <p>
+                Manage applications connected to Organization SSO.
+            </p>
+
+        </div>
+
+        <a
+                class="button"
+                href="/admin/applications/register">
+
+            + Register Application
+
+        </a>
+
+    </div>
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Name</th>
+                <th>Client ID</th>
+                <th>Status</th>
+                <th>Redirect URI</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="app : ${applications}">
+
+                <td
+                        th:text="${app.name}">
+                    Application
+                </td>
+
+                <td
+                        th:text="${app.clientId}">
+                    client
+                </td>
+
+                <td
+                        class="status"
+                        th:text="${app.status}">
+                    ACTIVE
+                </td>
+
+                <td
+                        th:text="${app.redirectUri}">
+                    URI
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

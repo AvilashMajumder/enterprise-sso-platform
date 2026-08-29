@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Register Application | OrgShield</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 13px 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Register Application</h1>
+
+    <p>
+        Connect a new application to Organization SSO.
+    </p>
+
+    <form
+            th:action="@{/admin/applications/register}"
+            th:object="${application}"
+            method="post">
+
+        <label>Application Name</label>
+
+        <input
+                type="text"
+                th:field="*{name}"
+                placeholder="Inventory Portal"
+                required>
+
+        <label>Description</label>
+
+        <textarea
+                th:field="*{description}"
+                placeholder="Inventory management application">
+        </textarea>
+
+        <label>Client ID</label>
+
+        <input
+                type="text"
+                th:field="*{clientId}"
+                placeholder="inventory-portal"
+                required>
+
+        <label>Redirect URI</label>
+
+        <input
+                type="url"
+                th:field="*{redirectUri}"
+                placeholder="http://localhost:8090/login/oauth2/code/keycloak"
+                required>
+
+        <label>Post Logout Redirect URI</label>
+
+        <input
+                type="url"
+                th:field="*{postLogoutRedirectUri}"
+                placeholder="http://localhost:8090/"
+                required>
+
+        <button type="submit">
+            Register Application
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

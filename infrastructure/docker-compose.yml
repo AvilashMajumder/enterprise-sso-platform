@@ -17,5 +17,21 @@ services:
     volumes:
       - keycloak_data:/opt/keycloak/data
 
+  postgres:
+    image: postgres:16
+    container_name: orgshield-postgres
+
+    environment:
+      POSTGRES_DB: orgshield
+      POSTGRES_USER: orgshield
+      POSTGRES_PASSWORD: orgshield
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+        - orgshield_postgres_data:/var/lib/postgresql/data
+
 volumes:
-  keycloak_data:
+    keycloak_data:
+    orgshield_postgres_data:
