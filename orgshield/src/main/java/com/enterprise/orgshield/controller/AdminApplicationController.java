@@ -49,4 +49,13 @@ public class AdminApplicationController {
 
         return "redirect:/admin/applications";
     }
+
+    @PostMapping("/{id}/delete")
+    public String deleteApplication(
+            @PathVariable Long id) {
+
+        applicationService.deleteApplication(id);
+
+        return "redirect:/admin/applications";
+    }
 }

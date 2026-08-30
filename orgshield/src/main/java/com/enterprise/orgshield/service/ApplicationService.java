@@ -15,7 +15,8 @@ public class ApplicationService {
     private final KeycloakAdminService keycloakAdminService;
 
     public ApplicationService(
-            ApplicationRepository applicationRepository, KeycloakAdminService keycloakAdminService) {
+            ApplicationRepository applicationRepository,
+            KeycloakAdminService keycloakAdminService) {
 
         this.applicationRepository = applicationRepository;
         this.keycloakAdminService = keycloakAdminService;
@@ -50,7 +51,8 @@ public class ApplicationService {
 
         application.setStatus(ApplicationStatus.PENDING);
 
-        Application saved = applicationRepository.save(application);
+        Application saved =
+                applicationRepository.save(application);
 
         try {
 
@@ -67,6 +69,7 @@ public class ApplicationService {
 
             throw e;
         }
+
         return saved;
     }
 
@@ -87,12 +90,30 @@ public class ApplicationService {
 
     public void deleteApplication(Long id) {
 
-        if (!applicationRepository.existsById(id)) {
-            throw new IllegalArgumentException(
-                    "Application not found"
+        Application application =
+                applicationRepository.findById(id)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Application not found"
+                                )
+                        );
+
+        try {
+
+            // Delete client from Keycloak first
+            keycloakAdminService.deleteClient(
+                    application.getClientId()
+            );
+
+            // Then delete from PostgreSQL
+            applicationRepository.delete(application);
+
+        } catch (Exception e) {
+
+            throw new IllegalStateException(
+                    "Failed to delete application from Keycloak",
+                    e
             );
         }
-
-        applicationRepository.deleteById(id);
     }
 }
