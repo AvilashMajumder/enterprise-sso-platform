@@ -81,6 +81,9 @@ public class KeycloakAdminService {
 
     /*
      * Create a client in Keycloak.
+     *
+     * Every application registered through OrgShield
+     * automatically requires Minimum ACR = 2.
      */
     public void createClient(Application application) {
 
@@ -115,7 +118,10 @@ public class KeycloakAdminService {
                         Map.of(
                                 "post.logout.redirect.uris",
                                 application
-                                        .getPostLogoutRedirectUri()
+                                        .getPostLogoutRedirectUri(),
+
+                                "minimum.acr.value",
+                                "2"
                         )
                 );
 
@@ -231,4 +237,4 @@ public class KeycloakAdminService {
 
         return id.toString();
     }
-}
+}   
